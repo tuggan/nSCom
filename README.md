@@ -1,4 +1,4 @@
-nACom
+nSCom
 =====
 
-ncurses Android Comunicator
+ncurses Serial Comunicator mainly built for interfacing with Arduino
