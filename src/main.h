@@ -15,3 +15,25 @@
 
 #include <ncurses.h>
 
+void initiateWindow();
+WINDOW *createOutput();
+void closeWindow();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

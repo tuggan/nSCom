@@ -17,10 +17,39 @@
 
 
 int main(int argv, char *argc[]) {
+    initiateWindow();
+    //printw("Hello World");
+    WINDOW *printHere;
+    printHere = createOutput();    
+    //wprintw(printHere, "Hello World!");
+    mvwprintw(printHere, getmaxy(printHere)-2, 1, "Hello?\n");
+    wprintw(printHere, "World?");
+    wrefresh(printHere);
+    getch();
+    closeWindow();
     return 0;
 }
 
+void initiateWindow() {
+    initscr();
+    cbreak();
+    noecho();
+    refresh();
+}
 
+WINDOW *createOutput() {
+    WINDOW *win;
+    win = newwin(LINES-2,COLS,0,0);
+    attron(COLOR_RED);
+    box(win, 0, 0);
+    attroff(COLOR_RED);
+    wrefresh(win);
+    return win;
+}
+
+void closeWindow() {
+    endwin();
+}
 
 
 

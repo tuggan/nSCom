@@ -12,8 +12,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-CXX=g++
-CFLAGS=-c -Wall
+CXX=clang
+CFLAGS=-Wall -lncurses 
 SRCDIR=src/
 OBJDIR=obj/
 INSTALLDIR=install/
@@ -25,7 +25,7 @@ debug: CFLAGS += -DDEBUG -g
 debug: all
 
 $(PROGNAME): $(SRCDIR)main.cpp #a_functions.o
-	$(CXX) $(SRCDIR)main.cpp -o $@ 
+	$(CXX) $(CFLAGS) $(SRCDIR)main.cpp -o $@ 
 
 #a_functions.o: $(SRCDIR)a_functions.c
 #	$(CC) $(CFLAGS) $(SRCDIR)a_functions.c -o $(OBJDIR)$@
