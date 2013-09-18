@@ -18,13 +18,9 @@
 
 int main(int argv, char *argc[]) {
     initiateWindow();
-    //printw("Hello World");
-    WINDOW *printHere;
-    printHere = createOutput();    
-    //wprintw(printHere, "Hello World!");
-    mvwprintw(printHere, getmaxy(printHere)-2, 1, "Hello?\n");
-    wprintw(printHere, "World?");
-    wrefresh(printHere);
+    oWindow out = oWindow(LINES-2, COLS, 0, 0);
+    out.createWindow();
+    refresh();
     getch();
     closeWindow();
     return 0;
@@ -37,18 +33,28 @@ void initiateWindow() {
     refresh();
 }
 
-WINDOW *createOutput() {
-    WINDOW *win;
-    win = newwin(LINES-2,COLS,0,0);
-    attron(COLOR_RED);
-    box(win, 0, 0);
-    attroff(COLOR_RED);
-    wrefresh(win);
-    return win;
-}
-
 void closeWindow() {
     endwin();
+}
+
+oWindow::oWindow(int height, int width, int xStart,
+                 int yStart, bool border) {
+    this->height = height;
+    this->width = width;
+    this->xStart = xStart;
+    this->yStart = yStart;
+    this->border = border;
+}
+
+void oWindow::createWindow() {
+    this->wptr = newwin(this->height, this->width, this->xStart, this->yStart);
+    if(this->border)
+        box(this->wptr, 0, 0);
+    wrefresh(this->wptr);
+}
+
+oWindow::~oWindow() {
+
 }
 
 

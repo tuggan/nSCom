@@ -13,11 +13,32 @@
  *   limitations under the License.
  */
 
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <ncurses.h>
 
 void initiateWindow();
 WINDOW *createOutput();
 void closeWindow();
+
+class oWindow {
+private:
+    WINDOW *wptr;
+    bool border;
+    int height;
+    int width;
+    int xStart;
+    int yStart;
+
+public:
+    oWindow(int height, int width, int xStart, int yStart, bool border = true);
+    void createWindow();
+    ~oWindow();
+};
+
+#endif
+
 
 
 
