@@ -17,13 +17,20 @@
 #define MAIN_H
 
 #include <ncurses.h>
+#include <cstdarg>
+#include <unistd.h>
+// C++11
+#include <thread>
 
 void initiateWindow();
 WINDOW *createOutput();
 void closeWindow();
+void testOutput(class oWindow thing);
 
+/// @TODO Create outer window for border and inner window for printing
 class oWindow {
 private:
+    WINDOW *bptr;
     WINDOW *wptr;
     bool border;
     int height;
@@ -34,6 +41,8 @@ private:
 public:
     oWindow(int height, int width, int xStart, int yStart, bool border = true);
     void createWindow();
+    void printf(const char *p, ...);
+    void delLine();
     ~oWindow();
 };
 

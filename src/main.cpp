@@ -20,8 +20,13 @@ int main(int argv, char *argc[]) {
     initiateWindow();
     oWindow out = oWindow(LINES-2, COLS, 0, 0);
     out.createWindow();
+    //testOutput(out);
+    std::thread test(testOutput, out);
+    move(LINES,COLS);
+    mvprintw(LINES-1, 0, "HELLO WORLD!");
     refresh();
     getch();
+    test.join();
     closeWindow();
     return 0;
 }
@@ -47,9 +52,38 @@ oWindow::oWindow(int height, int width, int xStart,
 }
 
 void oWindow::createWindow() {
-    this->wptr = newwin(this->height, this->width, this->xStart, this->yStart);
+    this->bptr = newwin(this->height, this->width, this->xStart, this->yStart);
+    this->wptr = newwin(this->height-2, this->width-2,
+                        this->xStart+1, this->yStart+1);
     if(this->border)
-        box(this->wptr, 0, 0);
+        box(this->bptr, 0, 0);
+    scrollok(this->wptr, true);
+    wrefresh(this->bptr);
+    wrefresh(this->wptr);
+}
+
+void oWindow::printf(const char *p, ...) {
+    std::va_list fmtargs;
+    char buffer[1024];
+
+    va_start(fmtargs,p);
+    vsnprintf(buffer,sizeof(buffer)-1,p,fmtargs);
+    va_end(fmtargs);
+
+    wprintw(this->wptr, buffer);
+    wrefresh(this->wptr);
+}
+
+void testOutput(oWindow thing) {
+    for(int i = 0; i < 4000; i++){
+        thing.printf("%d\n", i);
+        usleep(250);
+    }
+}
+
+void oWindow::delLine() {
+    move(0, 0);
+    wdeleteln(this->wptr);
     wrefresh(this->wptr);
 }
 

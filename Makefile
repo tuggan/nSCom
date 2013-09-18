@@ -13,7 +13,7 @@
 #   limitations under the License.
 
 CXX=clang++
-CFLAGS=-Wall -std=c++11 -lncurses 
+CFLAGS=-Wall -std=c++11 -lncurses -lpthread
 SRCDIR=src/
 OBJDIR=obj/
 INSTALLDIR=install/
