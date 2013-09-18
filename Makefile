@@ -13,7 +13,7 @@
 #   limitations under the License.
 
 CXX=clang++
-CFLAGS=-Wall -std=c++11 -lncurses -lpthread
+CFLAGS=-Wall -std=c++11 
 SRCDIR=src/
 OBJDIR=obj/
 INSTALLDIR=install/
@@ -27,11 +27,11 @@ debug: all
 verboseDbug: CFLAGS += -v
 verboseDbug: debug
 
-$(PROGNAME): $(SRCDIR)main.cpp #a_functions.o
-	$(CXX) $(CFLAGS) $(SRCDIR)main.cpp -o $@ 
+$(PROGNAME): $(SRCDIR)main.cpp oWindow.o
+	$(CXX) $(CFLAGS) -lncurses -lpthread $(SRCDIR)main.cpp $(OBJDIR)oWindow.o -o $@ 
 
-#a_functions.o: $(SRCDIR)a_functions.c
-#	$(CC) $(CFLAGS) $(SRCDIR)a_functions.c -o $(OBJDIR)$@
+oWindow.o: $(SRCDIR)oWindow.cpp
+	$(CXX) -c $(CFLAGS) $(SRCDIR)oWindow.cpp -o $(OBJDIR)$@
 
 createdirs:
 	mkdir -p $(OBJDIR)

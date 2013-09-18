@@ -13,28 +13,31 @@
  *   limitations under the License.
  */
 
-#ifndef MAIN_H
-#define MAIN_H
-
-#include "oWindow.h"
+#ifndef OWINDOW_H
+#define OWINDOW_H
 
 #include <ncurses.h>
-#include <unistd.h>
-// C++11
-#include <thread>
+#include <cstdarg>
 
-void initiateWindow();
-WINDOW *createOutput();
-void closeWindow();
-void testOutput(class oWindow thing);
+class oWindow {
+private:
+    WINDOW *bptr;
+    WINDOW *wptr;
+    bool border;
+    int height;
+    int width;
+    int xStart;
+    int yStart;
 
-/// @TODO Create outer window for border and inner window for printing
-
+public:
+    oWindow(int height, int width, int xStart, int yStart, bool border = true);
+    void createWindow();
+    void printf(const char *p, ...);
+    void delLine();
+    ~oWindow();
+};
 
 #endif
-
-
-
 
 
 

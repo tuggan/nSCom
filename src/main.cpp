@@ -42,37 +42,6 @@ void closeWindow() {
     endwin();
 }
 
-oWindow::oWindow(int height, int width, int xStart,
-                 int yStart, bool border) {
-    this->height = height;
-    this->width = width;
-    this->xStart = xStart;
-    this->yStart = yStart;
-    this->border = border;
-}
-
-void oWindow::createWindow() {
-    this->bptr = newwin(this->height, this->width, this->xStart, this->yStart);
-    this->wptr = newwin(this->height-2, this->width-2,
-                        this->xStart+1, this->yStart+1);
-    if(this->border)
-        box(this->bptr, 0, 0);
-    scrollok(this->wptr, true);
-    wrefresh(this->bptr);
-    wrefresh(this->wptr);
-}
-
-void oWindow::printf(const char *p, ...) {
-    std::va_list fmtargs;
-    char buffer[1024];
-
-    va_start(fmtargs,p);
-    vsnprintf(buffer,sizeof(buffer)-1,p,fmtargs);
-    va_end(fmtargs);
-
-    wprintw(this->wptr, buffer);
-    wrefresh(this->wptr);
-}
 
 void testOutput(oWindow thing) {
     for(int i = 0; i < 4000; i++){
@@ -81,15 +50,6 @@ void testOutput(oWindow thing) {
     }
 }
 
-void oWindow::delLine() {
-    move(0, 0);
-    wdeleteln(this->wptr);
-    wrefresh(this->wptr);
-}
-
-oWindow::~oWindow() {
-
-}
 
 
 
