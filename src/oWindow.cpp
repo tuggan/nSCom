@@ -22,7 +22,7 @@ oWindow::oWindow(int height, int width, int xStart,
     this->xStart = xStart;
     this->yStart = yStart;
     this->border = border;
-    this->rptr = NULL;
+    this->rFunc = NULL;
 }
 
 void oWindow::createWindow() {
@@ -46,15 +46,12 @@ void oWindow::printf(const char *p, ...) {
 
     wprintw(this->wptr, buffer);
     wrefresh(this->wptr);
-
-    if(this->rptr) {
-        wmove(this->rptr, 0, 0);
-        wrefresh(this->rptr);
-    }
+    
+    this->rFunc();
 }
 
-void oWindow::setReturn(WINDOW *w) {
-    this->rptr = w;
+void oWindow::setReturnFunc(std::function<void(void)> f) {
+    this->rFunc = f;
 }
 
 void oWindow::delLine() {

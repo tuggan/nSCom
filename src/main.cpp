@@ -23,12 +23,14 @@ int main(int argv, char *argc[]) {
     out.createWindow();
     in.createWindow();
 
-    out.setReturn(in.getW());
+    out.setReturnFunc(std::bind(returnCarrot, in));
     wprintw(in.getW(), "HelloWorld!");
     wrefresh(in.getW());
 
     std::thread test(testOutput, out);
     refresh();
+    getch();
+    returnCarrot(in);
     getch();
     test.join();
     closeWindow();
@@ -39,6 +41,8 @@ void initiateWindow() {
     initscr();
     cbreak();
     noecho();
+    nonl();
+    //curs_set(0);
     refresh();
 }
 
@@ -53,6 +57,11 @@ void testOutput(oWindow thing) {
         usleep(250);
     }
 }
+
+void returnCarrot(iWindow i) {
+    i.returnCarrot();
+}
+
 
 
 

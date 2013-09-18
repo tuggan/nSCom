@@ -30,6 +30,7 @@ public:
     iWindow(int height, int width, int xStart, int yStart);
     void createWindow();
     WINDOW* getW();
+    void returnCarrot();
 };
 
 #endif

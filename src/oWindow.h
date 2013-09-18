@@ -18,12 +18,13 @@
 
 #include <ncurses.h>
 #include <cstdarg>
+#include <functional>
 
 class oWindow {
 private:
     WINDOW *bptr;
-WINDOW *wptr;
-WINDOW *rptr;
+    WINDOW *wptr;
+    std::function<void(void)> rFunc;
     bool border;
     int height;
     int width;
@@ -33,8 +34,8 @@ WINDOW *rptr;
 public:
     oWindow(int height, int width, int xStart, int yStart, bool border = true);
     void createWindow();
-void printf(const char *p, ...);
-void setReturn(WINDOW* w);
+    void printf(const char *p, ...);
+    void setReturnFunc(std::function<void(void)> f);
     void delLine();
     ~oWindow();
 };

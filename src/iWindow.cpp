@@ -30,7 +30,10 @@ WINDOW* iWindow::getW(){
     return this->wptr;
 }
 
-
+void iWindow::returnCarrot() {
+    wmove(this->wptr, 0, 0);
+    wrefresh(this->wptr);
+}
 
 
 
