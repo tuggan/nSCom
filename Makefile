@@ -27,11 +27,14 @@ debug: all
 verboseDbug: CFLAGS += -v
 verboseDbug: debug
 
-$(PROGNAME): $(SRCDIR)main.cpp oWindow.o
-	$(CXX) $(CFLAGS) -lncurses -lpthread $(SRCDIR)main.cpp $(OBJDIR)oWindow.o -o $@ 
+$(PROGNAME): $(SRCDIR)main.cpp oWindow.o iWindow.o
+	$(CXX) $(CFLAGS) -lncurses -lpthread $(SRCDIR)main.cpp $(OBJDIR)oWindow.o $(OBJDIR)iWindow.o -o $@ 
 
 oWindow.o: $(SRCDIR)oWindow.cpp
 	$(CXX) -c $(CFLAGS) $(SRCDIR)oWindow.cpp -o $(OBJDIR)$@
+
+iWindow.o: $(SRCDIR)iWindow.cpp
+	$(CXX) -c $(CFLAGS) $(SRCDIR)iWindow.cpp -o $(OBJDIR)$@
 
 createdirs:
 	mkdir -p $(OBJDIR)

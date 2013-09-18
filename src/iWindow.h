@@ -13,29 +13,26 @@
  *   limitations under the License.
  */
 
-#ifndef MAIN_H
-#define MAIN_H
-
-#include "oWindow.h"
-#include "iWindow.h"
+#ifndef IWINDOW_H
+#define IWINDOW_H
 
 #include <ncurses.h>
-#include <unistd.h>
-// C++11
-#include <thread>
 
-void initiateWindow();
-WINDOW *createOutput();
-void closeWindow();
-void testOutput(class oWindow thing);
+class iWindow {
+private:
+    int height;
+    int width;
+    int xStart;
+    int yStart;
+    WINDOW *wptr;
 
-/// @TODO Create outer window for border and inner window for printing
-
+public:
+    iWindow(int height, int width, int xStart, int yStart);
+    void createWindow();
+    WINDOW* getW();
+};
 
 #endif
-
-
-
 
 
 

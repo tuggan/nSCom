@@ -13,26 +13,22 @@
  *   limitations under the License.
  */
 
-#ifndef MAIN_H
-#define MAIN_H
-
-#include "oWindow.h"
 #include "iWindow.h"
 
-#include <ncurses.h>
-#include <unistd.h>
-// C++11
-#include <thread>
+iWindow::iWindow(int height, int width, int xStart, int yStart) {
+    this->height = height;
+    this->width = width;
+    this->xStart = xStart;
+    this->yStart = yStart;
+}
 
-void initiateWindow();
-WINDOW *createOutput();
-void closeWindow();
-void testOutput(class oWindow thing);
+void iWindow::createWindow() {
+    this->wptr = newwin(this->height, this->width, this->xStart, this->yStart);
+}
 
-/// @TODO Create outer window for border and inner window for printing
-
-
-#endif
+WINDOW* iWindow::getW(){
+    return this->wptr;
+}
 
 
 

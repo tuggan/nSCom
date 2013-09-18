@@ -22,7 +22,8 @@
 class oWindow {
 private:
     WINDOW *bptr;
-    WINDOW *wptr;
+WINDOW *wptr;
+WINDOW *rptr;
     bool border;
     int height;
     int width;
@@ -32,7 +33,8 @@ private:
 public:
     oWindow(int height, int width, int xStart, int yStart, bool border = true);
     void createWindow();
-    void printf(const char *p, ...);
+void printf(const char *p, ...);
+void setReturn(WINDOW* w);
     void delLine();
     ~oWindow();
 };

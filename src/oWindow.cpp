@@ -22,6 +22,7 @@ oWindow::oWindow(int height, int width, int xStart,
     this->xStart = xStart;
     this->yStart = yStart;
     this->border = border;
+    this->rptr = NULL;
 }
 
 void oWindow::createWindow() {
@@ -45,6 +46,15 @@ void oWindow::printf(const char *p, ...) {
 
     wprintw(this->wptr, buffer);
     wrefresh(this->wptr);
+
+    if(this->rptr) {
+        wmove(this->rptr, 0, 0);
+        wrefresh(this->rptr);
+    }
+}
+
+void oWindow::setReturn(WINDOW *w) {
+    this->rptr = w;
 }
 
 void oWindow::delLine() {

@@ -19,11 +19,15 @@
 int main(int argv, char *argc[]) {
     initiateWindow();
     oWindow out = oWindow(LINES-2, COLS, 0, 0);
+    iWindow in = iWindow(1, COLS, LINES-1, 0);
     out.createWindow();
-    //testOutput(out);
+    in.createWindow();
+
+    out.setReturn(in.getW());
+    wprintw(in.getW(), "HelloWorld!");
+    wrefresh(in.getW());
+
     std::thread test(testOutput, out);
-    move(LINES,COLS);
-    mvprintw(LINES-1, 0, "HELLO WORLD!");
     refresh();
     getch();
     test.join();
@@ -44,7 +48,7 @@ void closeWindow() {
 
 
 void testOutput(oWindow thing) {
-    for(int i = 0; i < 4000; i++){
+    for(int i = 0; i < 2000; i++){
         thing.printf("%d\n", i);
         usleep(250);
     }
