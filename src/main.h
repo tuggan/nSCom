@@ -23,6 +23,7 @@
 #include <unistd.h>
 // C++11
 #include <thread>
+#include <mutex>
 
 void initiateWindow();
 WINDOW *createOutput();

@@ -19,6 +19,7 @@
 #include <ncurses.h>
 #include <cstdarg>
 #include <functional>
+#include <mutex>
 
 class oWindow {
 private:
@@ -30,12 +31,14 @@ private:
     int width;
     int xStart;
     int yStart;
+    std::mutex *mutx;
 
 public:
     oWindow(int height, int width, int xStart, int yStart, bool border = true);
     void createWindow();
     void printf(const char *p, ...);
     void setReturnFunc(std::function<void(void)> f);
+    void setPrintMutex(std::mutex *m);
     void delLine();
     ~oWindow();
 };

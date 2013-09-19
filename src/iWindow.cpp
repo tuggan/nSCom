@@ -20,6 +20,7 @@ iWindow::iWindow(int height, int width, int xStart, int yStart) {
     this->width = width;
     this->xStart = xStart;
     this->yStart = yStart;
+    this->mtx = NULL;
 }
 
 void iWindow::createWindow() {
@@ -68,8 +69,16 @@ void iWindow::printf(const char *p, ...) {
     va_end(fmtargs);
 
     //wprintw(this->wptr, buffer);
+    if(this->mtx)
+        this->mtx->lock();
     mvwprintw(this->wptr, 0, 0, buffer);
     wrefresh(this->wptr);
+    if(this->mtx)
+        this->mtx->unlock();
+}
+
+void iWindow::setPrintMutex(std::mutex *m) {
+    this->mtx = m;
 }
 
 iWindow::~iWindow() {

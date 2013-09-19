@@ -19,6 +19,7 @@
 #include <ncurses.h>
 #include <string>
 #include <cstdarg>
+#include <mutex>
 
 class iWindow {
 private:
@@ -28,6 +29,7 @@ private:
     int yStart;
     WINDOW *wptr;
     std::string inputBuffer;
+    std::mutex *mtx;
 
 public:
     iWindow(int height, int width, int xStart, int yStart);
@@ -37,6 +39,7 @@ public:
     void startInputWatch();
     void updateLine();
     void printf(const char *p, ...);
+    void setPrintMutex(std::mutex *m);
     ~iWindow();
 };
 

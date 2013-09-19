@@ -23,6 +23,7 @@ oWindow::oWindow(int height, int width, int xStart,
     this->yStart = yStart;
     this->border = border;
     this->rFunc = NULL;
+    this->mutx = NULL;
 }
 
 void oWindow::createWindow() {
@@ -44,8 +45,12 @@ void oWindow::printf(const char *p, ...) {
     vsnprintf(buffer,sizeof(buffer)-1,p,fmtargs);
     va_end(fmtargs);
 
+    if(this->mutx)
+        this->mutx->lock();
     wprintw(this->wptr, buffer);
     wrefresh(this->wptr);
+    if(this->mutx)
+        this->mutx->unlock();
 
     if(this->rFunc)
         this->rFunc();
@@ -53,6 +58,10 @@ void oWindow::printf(const char *p, ...) {
 
 void oWindow::setReturnFunc(std::function<void(void)> f) {
     this->rFunc = f;
+}
+
+void oWindow::setPrintMutex(std::mutex *m) {
+    this->mutx = m;
 }
 
 void oWindow::delLine() {
