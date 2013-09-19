@@ -41,9 +41,10 @@ int main(int argv, char *argc[]) {
 
 void initiateWindow() {
     initscr();
-    cbreak();
+    //cbreak();
+    raw();
     noecho();
-    nonl();
+    //nonl();
     //curs_set(0);
     refresh();
 }
