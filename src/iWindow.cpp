@@ -32,7 +32,7 @@ WINDOW* iWindow::getW(){
 }
 
 void iWindow::returnCarrot() {
-    wmove(this->wptr, 0, 0);
+    wmove(this->wptr, 0, this->inputBuffer.size()-2);
     wrefresh(this->wptr);
 }
 
@@ -55,9 +55,8 @@ void iWindow::updateLine() {
         this->mtx->lock();
     wmove(this->wptr, 0, 0);
     wclrtoeol(this->wptr);
-//wdeleteln(this->wptr);
-//wclear(this->wptr);
     wrefresh(this->wptr);
+    this->returnCarrot();
     if(this->mtx)
         this->mtx->unlock();
     int offset = 0;
