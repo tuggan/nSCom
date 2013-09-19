@@ -29,6 +29,7 @@ WINDOW *createOutput();
 void closeWindow();
 void testOutput(class oWindow thing);
 void returnCarrot(iWindow i);
+void watchInput(iWindow i);
 
 /// @TODO Create outer window for border and inner window for printing
 

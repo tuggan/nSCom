@@ -24,15 +24,12 @@ int main(int argv, char *argc[]) {
     in.createWindow();
 
     out.setReturnFunc(std::bind(returnCarrot, in));
-    wprintw(in.getW(), "HelloWorld!");
-    wrefresh(in.getW());
 
+    std::thread input(watchInput, in);
     std::thread test(testOutput, out);
     refresh();
-    getch();
-    returnCarrot(in);
-    getch();
     test.join();
+    input.join();
     closeWindow();
     return 0;
 }
@@ -62,6 +59,9 @@ void returnCarrot(iWindow i) {
     i.returnCarrot();
 }
 
+void watchInput(iWindow i) {
+    i.startInputWatch();
+}
 
 
 

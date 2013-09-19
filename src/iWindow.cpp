@@ -35,6 +35,49 @@ void iWindow::returnCarrot() {
     wrefresh(this->wptr);
 }
 
+void iWindow::startInputWatch() {
+    char c;
+    while(c != 'q') {
+        c = getch();
+        if(c != '\n') {
+            inputBuffer += c;
+            this->updateLine();
+        } else {
+            inputBuffer.clear();
+            this->updateLine();
+        }
+    }
+}
+
+void iWindow::updateLine() {
+    wdeleteln(this->wptr);
+    //wclear(this->wptr);
+    int offset = 0;
+    if((offset = (this->inputBuffer.size() - this->width + 4)) < 0 )
+        offset = 0;
+    this->printf("# %s", this->inputBuffer.substr(offset).c_str());
+    //waddstr(this->wptr, this->inputBuffer.substr(offset).c_str());
+}
+
+void iWindow::printf(const char *p, ...) {
+    std::va_list fmtargs;
+    char buffer[1024];
+
+    va_start(fmtargs,p);
+    vsnprintf(buffer,sizeof(buffer)-1,p,fmtargs);
+    va_end(fmtargs);
+
+    //wprintw(this->wptr, buffer);
+    mvwprintw(this->wptr, 0, 0, buffer);
+    wrefresh(this->wptr);
+}
+
+iWindow::~iWindow() {
+    
+}
+
+
+
 
 
 

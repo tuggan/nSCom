@@ -17,6 +17,8 @@
 #define IWINDOW_H
 
 #include <ncurses.h>
+#include <string>
+#include <cstdarg>
 
 class iWindow {
 private:
@@ -25,12 +27,17 @@ private:
     int xStart;
     int yStart;
     WINDOW *wptr;
+    std::string inputBuffer;
 
 public:
     iWindow(int height, int width, int xStart, int yStart);
     void createWindow();
     WINDOW* getW();
     void returnCarrot();
+    void startInputWatch();
+    void updateLine();
+    void printf(const char *p, ...);
+    ~iWindow();
 };
 
 #endif

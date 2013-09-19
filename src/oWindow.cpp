@@ -46,8 +46,9 @@ void oWindow::printf(const char *p, ...) {
 
     wprintw(this->wptr, buffer);
     wrefresh(this->wptr);
-    
-    this->rFunc();
+
+    if(this->rFunc)
+        this->rFunc();
 }
 
 void oWindow::setReturnFunc(std::function<void(void)> f) {
