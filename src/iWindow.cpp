@@ -25,6 +25,7 @@ iWindow::iWindow(int height, int width, int xStart, int yStart) {
 
 void iWindow::createWindow() {
     this->wptr = newwin(this->height, this->width, this->xStart, this->yStart);
+    this->printf("# ");
 }
 
 WINDOW* iWindow::getW(){
@@ -37,17 +38,46 @@ void iWindow::returnCarrot() {
 }
 
 void iWindow::startInputWatch() {
-    char c;
-    while(c != 'q') {
+    char c = 0;
+    while(c != 27 && c != 3) { // 27 == esc
         c = getch();
-        if(c != '\n') {
-            inputBuffer += c;
-            this->updateLine();
-        } else {
+        switch(c){
+        case '\n':
             inputBuffer.clear();
-            this->updateLine();
+            break;
+        case 26: // C+z
+            def_prog_mode();
+            endwin();
+            system("/bin/bash");
+            reset_prog_mode();
+            refresh();
+            break;
+        case 127: // Backspace
+            if(this->inputBuffer.size() > 0)
+                this->inputBuffer.pop_back();
+            break;
+        case 27:
+            this->inputBuffer = "Waiting for other threads to finish... "
+                "(^C+c to exit now, this might break your terminal)";
+            break;
+        default:
+            if(std::isprint(c))
+                inputBuffer += c;
+            #ifdef DEBUG
+            else {
+                std::stringstream stream;
+                int tmp = c;
+                stream << tmp;
+                inputBuffer.append(stream.str());
+            }
+            #endif
+            break;
         }
+        this->updateLine();
     }
+    // @TODO#MAEK THIS BEAUTIFULL!!
+    if(c == 3)
+        exit(0);
 }
 
 void iWindow::updateLine() {

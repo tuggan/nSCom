@@ -19,6 +19,8 @@
 #include <ncurses.h>
 #include <string>
 #include <cstdarg>
+#include <cctype>
+#include <sstream>
 #include <mutex>
 
 class iWindow {
