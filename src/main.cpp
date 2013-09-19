@@ -23,6 +23,11 @@ int main(int argv, char *argc[]) {
     out.createWindow();
     in.createWindow();
 
+    std::mutex printLck;
+    
+    in.setPrintMutex(&printLck);
+    out.setPrintMutex(&printLck);
+    
     out.setReturnFunc(std::bind(returnCarrot, in));
 
     std::thread input(watchInput, in);
@@ -49,7 +54,7 @@ void closeWindow() {
 
 
 void testOutput(oWindow thing) {
-    for(int i = 0; i < 2000; i++){
+    for(int i = 0; i < 10000; i++){
         thing.printf("%d\n", i);
         usleep(250);
     }

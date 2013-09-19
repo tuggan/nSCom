@@ -51,8 +51,15 @@ void iWindow::startInputWatch() {
 }
 
 void iWindow::updateLine() {
-    wdeleteln(this->wptr);
-    //wclear(this->wptr);
+    if(this->mtx)
+        this->mtx->lock();
+    wmove(this->wptr, 0, 0);
+    wclrtoeol(this->wptr);
+//wdeleteln(this->wptr);
+//wclear(this->wptr);
+    wrefresh(this->wptr);
+    if(this->mtx)
+        this->mtx->unlock();
     int offset = 0;
     if((offset = (this->inputBuffer.size() - this->width + 4)) < 0 )
         offset = 0;
