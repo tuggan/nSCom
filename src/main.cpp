@@ -30,11 +30,10 @@ int main(int argv, char *argc[]) {
     
     out.setReturnFunc(std::bind(returnCarrot, in));
 
-    std::thread input(watchInput, in);
+    in.startInputWatch();
     std::thread test(testOutput, out);
     refresh();
     test.join();
-    input.join();
     closeWindow();
     return 0;
 }

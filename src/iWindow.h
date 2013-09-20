@@ -21,6 +21,7 @@
 #include <cstdarg>
 #include <cctype>
 #include <sstream>
+#include <thread>
 #include <mutex>
 
 class iWindow {
@@ -32,13 +33,15 @@ private:
     WINDOW *wptr;
     std::string inputBuffer;
     std::mutex *mtx;
-
+    std::thread *ipw;
+    
 public:
     iWindow(int height, int width, int xStart, int yStart);
     void createWindow();
     WINDOW* getW();
     void returnCarrot();
     void startInputWatch();
+    void inputWatch();
     void updateLine();
     void printf(const char *p, ...);
     void setPrintMutex(std::mutex *m);

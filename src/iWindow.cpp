@@ -21,6 +21,7 @@ iWindow::iWindow(int height, int width, int xStart, int yStart) {
     this->xStart = xStart;
     this->yStart = yStart;
     this->mtx = NULL;
+    this->ipw = NULL;
 }
 
 void iWindow::createWindow() {
@@ -38,6 +39,10 @@ void iWindow::returnCarrot() {
 }
 
 void iWindow::startInputWatch() {
+    this->ipw = new std::thread(&iWindow::inputWatch, this);
+}
+
+void iWindow::inputWatch() {
     char c = 0;
     while(c != 27 && c != 3) { // 27 == esc
         c = getch();
@@ -118,7 +123,8 @@ void iWindow::setPrintMutex(std::mutex *m) {
 }
 
 iWindow::~iWindow() {
-    
+    if(this->ipw)
+        this->ipw->join();
 }
 
 
