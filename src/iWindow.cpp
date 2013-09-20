@@ -81,8 +81,10 @@ void iWindow::inputWatch() {
         this->updateLine();
     }
     // @TODO#MAEK THIS BEAUTIFULL!!
-    if(c == 3)
+    if(c == 3){
+        endwin();
         exit(0);
+    }
 }
 
 void iWindow::updateLine() {
