@@ -13,7 +13,7 @@
  *   limitations under the License.
  */
 
-#include "main.h"
+#include "nSCom.h"
 
 
 int main(int argv, char *argc[]) {

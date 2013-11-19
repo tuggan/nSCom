@@ -36,8 +36,8 @@ public:
     int setBaud(int baud);
     int setSeparator(char c);
     int setReadCallback(void (*readCallBack)(char*));
-    int open();
-    int close();
+    int openCon();
+    int closeCon();
     char *readUntillSep();
     ~serialIO();
 };

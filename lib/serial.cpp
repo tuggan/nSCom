@@ -17,14 +17,14 @@
 
 serialIO::serialIO() {
     this->serialPort = NULL;
-    this->baud = NULL;
+    this->baud = 0;
     this->sep = '\n';
     this->serialFD = -1;
 }
 
 serialIO::serialIO(char *p, int rate) {
     this->serialPort = p;
-    this->baud == NULL;
+    this->baud == 0;
     this->setBaud(rate);
     this->sep = '\n';
     this->serialFD = -1;
@@ -63,10 +63,10 @@ int serialIO::setSeparator(char c) {
 
 
 
-int serialIO::open() {
+int serialIO::openCon() {
     if(this->serialPort == NULL) {
         return -1; // No serial path set.
-    } else if (this->baud == NULL) {
+    } else if (this->baud == 0) {
         return -2; // Baudrate not set.
     }
 
@@ -81,7 +81,7 @@ int serialIO::open() {
     return 0;
 }
 
-int serialIO::close() {
+int serialIO::closeCon() {
     if(this->serialFD == -1)
         return -1;
     int c = close(this->serialFD);
@@ -100,7 +100,7 @@ char *serialIO::readUntillSep() {
 
 serialIO::~serialIO() {
     if(this->serialFD != -1)
-        close();
+        closeCon();
     // Do something with perror here!
 }
 
