@@ -16,11 +16,26 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
+#include <termios.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
-class serial {
+class serialIO {
 private:
-    char *path;
-    int rate;
+    char *serialPort;
+    int serialFD;
+    speed_t baud;
+    char sep;
+    
+public:
+    serialIO();
+    serialIO(char *p, int rate);
+    int setSerialPort(char *p);
+    int setBaud(int baud);
+    int setSeparator(char c);
+    int open();
+    int close();
+    ~serialIO();
 };
 
 
