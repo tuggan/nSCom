@@ -17,14 +17,25 @@
 
 serialIO::serialIO() {
     this->serialPort = NULL;
-    this->baud = 0;
+    this->baud = NULL;
     this->sep = '\n';
+    this->serialFD = -1;
 }
 
 serialIO::serialIO(char *p, int rate) {
     this->serialPort = p;
+    this->baud == NULL;
     this->setBaud(rate);
     this->sep = '\n';
+    this->serialFD = -1;
+}
+
+int serialIO::setSerialPort(char *p) {
+    int fd;
+    fd = open(p, O_RDWR | O_NONBLOCK);
+    if(fd == -1) {
+        return -1;
+    }
 }
 
 int serialIO::setBaud(int baud) {
@@ -44,6 +55,53 @@ int serialIO::setBaud(int baud) {
     default: return -1;
     }
     return 0;
+}
+
+int serialIO::setSeparator(char c) {
+    this->sep = c;
+}
+
+
+
+int serialIO::open() {
+    if(this->serialPort == NULL) {
+        return -1; // No serial path set.
+    } else if (this->baud == NULL) {
+        return -2; // Baudrate not set.
+    }
+
+    int fd;
+    fd = open(this->serialPort, O_RDWR | O_NONBLOCK);
+
+    if(fd == -1)
+        return -3; // File could not be opened.
+
+    this->serialFD = fd;
+
+    return 0;
+}
+
+int serialIO::close() {
+    if(this->serialFD == -1)
+        return -1;
+    int c = close(this->serialFD);
+    if(c != 0)
+        return -2;
+    this->serialFD = -1;
+    return 0;
+}
+
+/**
+ * This can be mighty dangerous if the separator is never sent!
+ */
+char *serialIO::readUntillSep() {
+    // this is a thing 
+}
+
+serialIO::~serialIO() {
+    if(this->serialFD != -1)
+        close();
+    // Do something with perror here!
 }
 
 

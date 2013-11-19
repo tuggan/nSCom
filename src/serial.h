@@ -19,6 +19,7 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 class serialIO {
 private:
@@ -26,6 +27,7 @@ private:
     int serialFD;
     speed_t baud;
     char sep;
+    void (*readCallBack)(char*);
     
 public:
     serialIO();
@@ -33,8 +35,10 @@ public:
     int setSerialPort(char *p);
     int setBaud(int baud);
     int setSeparator(char c);
+    int setReadCallback(void (*readCallBack)(char*));
     int open();
     int close();
+    char *readUntillSep();
     ~serialIO();
 };
 
